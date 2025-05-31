@@ -3,7 +3,7 @@
 import { FC, useState } from 'react';
 import { Plus, Clock } from 'lucide-react';
 import Link from 'next/link';
-import { EthereumIcon } from '../components/EthereumIcon';
+import Image from 'next/image';
 
 interface Subscription {
   id: string;
@@ -30,7 +30,7 @@ const Dashboard: FC = () => {
     },
     {
       id: '2',
-      name: 'Ethereum Magazine+',
+      name: 'Flares Magazine+',
       logo: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg',
       amount: 0.0012,
       interval: 'Yearly',
@@ -80,20 +80,20 @@ const Dashboard: FC = () => {
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-black mb-4">Total Active Subscriptions</h2>
           <div className="text-4xl font-bold text-black mb-4">3</div>
-          <div className="text-gray-600 flex items-center gap-1">Monthly spending: <EthereumIcon size={14} className="inline" /> 0.0024</div>
+          <div className="text-gray-600 flex items-center gap-1">Monthly spending: <Image src="/flr-logo.svg" width={14} height={14} alt="CFLR" className="inline" /> 0.0024</div>
         </div>
 
         {/* Upcoming Payments */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-black mb-4">Upcoming Payments</h2>
-          <div className="text-4xl font-bold text-orange-400 mb-4 flex items-center gap-2"><EthereumIcon size={28} /> 0.0004</div>
+          <div className="text-4xl font-bold text-orange-400 mb-4 flex items-center gap-2"><Image src="/flr-logo.svg" width={28} height={28} alt="CFLR" /> 0.0004</div>
           <div className="text-gray-600">Due in the next 7 days</div>
         </div>
 
         {/* Smart Contract Lock */}
         <div className="bg-white rounded-lg border border-gray-200 shadow-sm p-8">
           <h2 className="text-2xl font-bold text-black mb-4">Smart Contract Lock</h2>
-          <div className="text-4xl font-bold text-indigo-600 mb-4 flex items-center gap-2"><EthereumIcon size={28} /> 0.0032</div>
+          <div className="text-4xl font-bold text-indigo-600 mb-4 flex items-center gap-2"><Image src="/flr-logo.svg" width={28} height={28} alt="CFLR" /> 0.0032</div>
           <div className="text-gray-600">68% of recommended coverage</div>
         </div>
       </div>
@@ -123,7 +123,7 @@ const Dashboard: FC = () => {
                         {subscription.interval}
                       </span>
                       <span className="text-base font-bold text-orange-400 flex items-center gap-1">
-                        <EthereumIcon size={12} /> {subscription.amount}
+                        <Image src="/flr-logo.svg" width={12} height={12} alt="CFLR" /> {subscription.amount}
                       </span>
                     </div>
                   </div>

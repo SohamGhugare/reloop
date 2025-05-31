@@ -5,7 +5,7 @@ import { ArrowUp, Check, Info } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAccount } from 'wagmi';
-import { EthereumIcon } from '../../components/EthereumIcon';
+import Image from 'next/image';
 
 interface Creator {
   id: string;
@@ -16,10 +16,10 @@ interface Creator {
 }
 
 const popularCreators: Creator[] = [
-  { id: '1', name: 'Ethereum Magazine', address: '0xEthMag123...', verified: true, img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg' },
-  { id: '2', name: 'Ethereum Foundation', address: '0xEthFound456...', verified: true, img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg' },
-  { id: '3', name: 'Vitalik Newsletter', address: '0xVitalik789...', verified: true, img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg' },
-  { id: '4', name: 'Crypto Artists DAO', address: '0xArtDAO123...', verified: true, img: 'https://upload.wikimedia.org/wikipedia/commons/0/05/Ethereum_logo_2014.svg' }
+  { id: '1', name: 'Flares Magazine', address: '0xEthMag123...', verified: true, img: '/flr-logo.svg' },
+  { id: '2', name: 'Flares Foundation', address: '0xEthFound456...', verified: true, img: '/flr-logo.svg' },
+  { id: '3', name: 'Vitalik Newsletter', address: '0xVitalik789...', verified: true, img: '/flr-logo.svg' },
+  { id: '4', name: 'Crypto Artists DAO', address: '0xArtDAO123...', verified: true, img: '/flr-logo.svg' }
 ];
 
 const SubscriptionForm: FC = () => {
@@ -38,9 +38,9 @@ const SubscriptionForm: FC = () => {
   
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
   
-  // Ethereum price simulation
-  const ethPrice = 3450; // USD
-  const ethAmount = currency === 'USD' ? Number(amount) / ethPrice : Number(amount);
+  // Flares price simulation
+  const cflrPrice = 3450; // USD
+  const cflrAmount = currency === 'USD' ? Number(amount) / cflrPrice : Number(amount);
   
   const handleSelectCreator = (creator: Creator) => {
     setSelectedCreator(creator);
@@ -265,7 +265,7 @@ const SubscriptionForm: FC = () => {
                       type="text"
                       value={recipientAddress}
                       onChange={(e) => setRecipientAddress(e.target.value)}
-                      placeholder="Enter an Ethereum address"
+                      placeholder="Enter a Flares address"
                       className="w-full px-3 py-2 border text-black border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500"
                     />
                     <p className="mt-1 text-sm text-gray-500">
@@ -313,7 +313,7 @@ const SubscriptionForm: FC = () => {
                     className="px-3 py-1 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 placeholder-gray-500 text-black"
                   >
                     <option value="USD">USD</option>
-                    <option value="ETH">ETH</option>
+                    <option value="CFLR">CFLR</option>
                   </select>
                 </div>
                 <div className="relative">
@@ -330,9 +330,9 @@ const SubscriptionForm: FC = () => {
                 </div>
                 <div className="mt-1 text-sm text-gray-500 flex items-center gap-1">
                   {currency === 'USD' ? (
-                    <>≈ <EthereumIcon size={12} /> {ethAmount.toFixed(6)} ETH</>
+                    <>≈ <Image src="/flr-logo.svg" width={12} height={12} alt="CFLR" /> {cflrAmount.toFixed(6)} CFLR</>
                   ) : (
-                    <>≈ ${(Number(amount) * ethPrice).toFixed(2)} USD</>
+                    <>≈ ${(Number(amount) * cflrPrice).toFixed(2)} USD</>
                   )}
                 </div>
               </div>
@@ -360,7 +360,7 @@ const SubscriptionForm: FC = () => {
                   <div className="flex justify-between items-center">
                     <span className="text-gray-500">Locked Amount:</span>
                     <span className="font-semibold text-black flex items-center gap-1">
-                      <EthereumIcon size={14} /> {(ethAmount * (plan === 'monthly' ? 3 : plan === 'quarterly' ? 2 : 1)).toFixed(6)} ETH
+                      <Image src="/flr-logo.svg" width={14} height={14} alt="CFLR" /> {(cflrAmount * (plan === 'monthly' ? 3 : plan === 'quarterly' ? 2 : 1)).toFixed(6)} CFLR
                     </span>
                   </div>
                   <div className="flex justify-between items-center">
@@ -374,7 +374,7 @@ const SubscriptionForm: FC = () => {
                   </div>
                 </div>
                 <p className="mt-4 text-sm text-gray-500">
-                  ETH will be locked in a smart contract and automatically sent to the recipient based on your subscription schedule. You can cancel anytime, and remaining funds will be returned to you.
+                  CFLR will be locked in a smart contract and automatically sent to the recipient based on your subscription schedule. You can cancel anytime, and remaining funds will be returned to you.
                 </p>
               </div>
             </div>
@@ -426,12 +426,12 @@ const SubscriptionForm: FC = () => {
                 <div>
                   <div className="text-gray-500">Amount per payment</div>
                   <div className="font-medium text-black">
-                    {currency === 'USD' ? `$${amount}` : `${amount} ETH`}
+                    {currency === 'USD' ? `$${amount}` : `${amount} CFLR`}
                     <div className="text-sm text-gray-500 flex items-center gap-1">
                       {currency === 'USD' ? (
-                        <>≈ <EthereumIcon size={12} /> {ethAmount.toFixed(6)} ETH</>
+                        <>≈ <Image src="/flr-logo.svg" width={12} height={12} alt="CFLR" /> {cflrAmount.toFixed(6)} CFLR</>
                       ) : (
-                        <>≈ ${(Number(amount) * ethPrice).toFixed(2)} USD</>
+                        <>≈ ${(Number(amount) * cflrPrice).toFixed(2)} USD</>
                       )}
                     </div>
                   </div>
@@ -447,19 +447,19 @@ const SubscriptionForm: FC = () => {
               
               <div className="bg-gray-50 rounded-lg p-4">
                 <div className="flex justify-between items-center mb-4">
-                  <h3 className="text-base font-medium text-black">Total ETH to Lock</h3>
+                  <h3 className="text-base font-medium text-black">Total CFLR to Lock</h3>
                   <span className="text-indigo-600 font-semibold flex items-center gap-1">
-                    <EthereumIcon size={14} /> {(ethAmount * (plan === 'monthly' ? 3 : plan === 'quarterly' ? 2 : 1)).toFixed(6)} ETH
+                    <Image src="/flr-logo.svg" width={14} height={14} alt="CFLR" /> {(cflrAmount * (plan === 'monthly' ? 3 : plan === 'quarterly' ? 2 : 1)).toFixed(6)} CFLR
                   </span>
                 </div>
                 <p className="text-sm text-gray-500">
-                  By clicking confirm, you agree to lock the above amount of ETH in a smart contract. This will enable automatic payments according to your subscription schedule. You can cancel anytime.
+                  By clicking confirm, you agree to lock the above amount of CFLR in a smart contract. This will enable automatic payments according to your subscription schedule. You can cancel anytime.
                 </p>
               </div>
               
               <div className="text-sm text-gray-500">
                 <p>
-                  <span className="font-semibold">Privacy Note:</span> Your subscription details are stored in an encrypted format on the Ethereum blockchain. Only you and the recipient can view the full transaction details.
+                  <span className="font-semibold">Privacy Note:</span> Your subscription details are stored in an encrypted format on the Flares blockchain. Only you and the recipient can view the full transaction details.
                 </p>
               </div>
             </div>
