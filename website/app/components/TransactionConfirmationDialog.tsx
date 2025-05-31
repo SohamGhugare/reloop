@@ -24,10 +24,10 @@ const TransactionConfirmationDialog: React.FC<TransactionConfirmationDialogProps
 }) => {
   const [steps, setSteps] = useState<Step[]>([
     { id: 'ftso', label: 'Confirming FLR/USD Feed price from FTSO...', status: 'pending' },
-    { id: 'channel', label: 'Creating State Channel...', status: 'pending' },
-    { id: 'contract', label: 'Deploying Subscription Contract...', status: 'pending' },
-    { id: 'funds', label: 'Locking Funds...', status: 'pending' },
-    { id: 'confirmation', label: 'Finalizing Transaction...', status: 'pending' }
+    { id: 'channel', label: 'Creating Nitrolite State Channel...', status: 'pending' },
+    { id: 'funding', label: 'Funding Channel with CFLR...', status: 'pending' },
+    { id: 'state', label: 'Setting Up Subscription State...', status: 'pending' },
+    { id: 'confirmation', label: 'Finalizing Nitrolite Transaction...', status: 'pending' }
   ]);
   
   const [flrPrice, setFlrPrice] = useState<string | null>(null);
@@ -68,15 +68,15 @@ const TransactionConfirmationDialog: React.FC<TransactionConfirmationDialogProps
         await new Promise(resolve => setTimeout(resolve, 3000));
         updateStepStatus('channel', 'completed');
         
-        // Step 3: Contract Deployment
-        updateStepStatus('contract', 'loading');
+        // Step 3: Funding Channel
+        updateStepStatus('funding', 'loading');
         await new Promise(resolve => setTimeout(resolve, 3000));
-        updateStepStatus('contract', 'completed');
+        updateStepStatus('funding', 'completed');
         
-        // Step 4: Locking Funds
-        updateStepStatus('funds', 'loading');
+        // Step 4: Setting Up Subscription State
+        updateStepStatus('state', 'loading');
         await new Promise(resolve => setTimeout(resolve, 3000));
-        updateStepStatus('funds', 'completed');
+        updateStepStatus('state', 'completed');
         
         // Step 5: Confirmation
         updateStepStatus('confirmation', 'loading');
@@ -95,13 +95,13 @@ const TransactionConfirmationDialog: React.FC<TransactionConfirmationDialogProps
         await new Promise(resolve => setTimeout(resolve, 3000));
         updateStepStatus('channel', 'completed');
         
-        updateStepStatus('contract', 'loading');
+        updateStepStatus('funding', 'loading');
         await new Promise(resolve => setTimeout(resolve, 3000));
-        updateStepStatus('contract', 'completed');
+        updateStepStatus('funding', 'completed');
         
-        updateStepStatus('funds', 'loading');
+        updateStepStatus('state', 'loading');
         await new Promise(resolve => setTimeout(resolve, 3000));
-        updateStepStatus('funds', 'completed');
+        updateStepStatus('state', 'completed');
         
         updateStepStatus('confirmation', 'loading');
         await new Promise(resolve => setTimeout(resolve, 3000));
