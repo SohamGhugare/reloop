@@ -6,8 +6,8 @@ import { Navbar } from './components/Navbar';
 import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
-  title: "EVM | RainbowKit Wallet",
-  description: "RainbowKit Wallet integration template",
+  title: "Reloop",
+  description: "Reloop | Subscription Management Platform",
 };
 
 export default function RootLayout({
