@@ -9,7 +9,7 @@ export default function Home() {
       <Hero />
       
       <footer className="fixed bottom-0 w-full text-center p-4 text-gray-600">
-        Made with ❤️ by <a href="https://hackdb.io" className="text-black">hackdb</a>
+        Made with ❤️ by <a href="https://reloop-website.vercel.app" className="text-black">Reloop</a>
       </footer>
     </div>
   );
