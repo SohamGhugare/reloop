@@ -1,13 +1,12 @@
 'use client';
 
-import { FC, useState, useEffect } from 'react';
+import { FC, useState } from 'react';
 import { ArrowUp, Check, Info } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAccount } from 'wagmi';
 import Image from 'next/image';
 import TransactionConfirmationDialog from '../../components/TransactionConfirmationDialog';
-import { ethers } from 'ethers';
 
 interface Creator {
   id: string;
