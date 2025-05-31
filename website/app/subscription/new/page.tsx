@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation';
 import toast from 'react-hot-toast';
 import { useAccount } from 'wagmi';
 import Image from 'next/image';
+import TransactionConfirmationDialog from '../../components/TransactionConfirmationDialog';
 
 interface Creator {
   id: string;
@@ -39,8 +40,10 @@ const SubscriptionForm: FC = () => {
   const [selectedCreator, setSelectedCreator] = useState<Creator | null>(null);
   
   // Flares price simulation
-  const cflrPrice = 3450; // USD
+  const cflrPrice = 0.0173; // USD
   const cflrAmount = currency === 'USD' ? Number(amount) / cflrPrice : Number(amount);
+  
+  const [showConfirmationDialog, setShowConfirmationDialog] = useState<boolean>(false);
   
   const handleSelectCreator = (creator: Creator) => {
     setSelectedCreator(creator);
@@ -87,11 +90,16 @@ const SubscriptionForm: FC = () => {
   
   const handleConfirmSubscription = () => {
     setLoading(true);
-    setTimeout(() => {
-      toast.success("Subscription created successfully!");
-      setLoading(false);
-      router.push('/dashboard');
-    }, 2000);
+    // Show confirmation dialog instead of immediate redirect
+    setShowConfirmationDialog(true);
+    setLoading(false);
+  };
+  
+  const handleTransactionComplete = () => {
+    // Close the dialog and redirect to dashboard
+    setShowConfirmationDialog(false);
+    toast.success('Subscription created successfully!');
+    router.push('/dashboard');
   };
 
   return (
@@ -487,6 +495,15 @@ const SubscriptionForm: FC = () => {
             </button>
           </div>
         </div>
+      )}
+      {/* Transaction Confirmation Dialog */}
+      {showConfirmationDialog && (
+        <TransactionConfirmationDialog
+          amount={amount}
+          currency={currency}
+          onComplete={handleTransactionComplete}
+          onClose={() => setShowConfirmationDialog(false)}
+        />
       )}
     </div>
   );
