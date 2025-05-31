@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import "./globals.css";
 import '@rainbow-me/rainbowkit/styles.css';
 import { Providers } from './providers';
+import { Navbar } from './components/Navbar';
+import { Toaster } from 'react-hot-toast';
 
 export const metadata: Metadata = {
   title: "EVM | RainbowKit Wallet",
@@ -18,7 +20,13 @@ export default function RootLayout({
       <body
         className={`antialiased`}
       >
-        <Providers>{children}</Providers>
+        <Providers>
+          <Toaster position="top-right" />
+          <div className="min-h-screen flex flex-col">
+            <Navbar />
+            <main className="flex-1">{children}</main>
+          </div>
+        </Providers>
       </body>
     </html>
   );
