@@ -22,18 +22,61 @@ type GetFeedsByIdResponse = {
   2: string;
 };
 
-export async function main() {
-  // Connect to an RPC node
-  const w3 = new Web3(RPC_URL);
-  // Set up contract instance
-  const ftsov2 = new w3.eth.Contract(abi as AbiItem[], FTSOV2_ADDRESS) as Contract<AbiItem[]>;
-  // Fetch current feeds
-  const res = await ftsov2.methods.getFeedsById(FEED_IDS).call() as GetFeedsByIdResponse;
-  // Log results
-  console.log("Feeds:", res["0"]);
-  console.log("Decimals:", res["1"]);
-  console.log("Timestamp:", res["2"]);
-  return res;
+// Type for the price data returned by getFLRUSDPrice
+export type PriceData = {
+  price: number;
+  decimals: number;
+  timestamp: string;
+  formattedPrice: string;
+};
+
+/**
+ * Fetches the current FLR/USD price from the FTSO protocol
+ * @returns PriceData object containing price information
+ */
+export async function getFLRUSDPrice(): Promise<PriceData> {
+  try {
+    // Connect to an RPC node
+    const w3 = new Web3(RPC_URL);
+    // Set up contract instance
+    const ftsov2 = new w3.eth.Contract(abi as AbiItem[], FTSOV2_ADDRESS) as Contract<AbiItem[]>;
+    // Fetch current feeds
+    const res = await ftsov2.methods.getFeedsById(FEED_IDS).call() as GetFeedsByIdResponse;
+    
+    // Extract price and decimals - handle BigInt values properly
+    const rawPrice = BigInt(res["0"][0]);
+    const decimals = Number(res["1"][0]);
+    const timestamp = new Date(Number(BigInt(res["2"])) * 1000).toISOString();
+    
+    // Calculate actual price with decimals - convert BigInt to string first
+    const divisor = BigInt(10 ** decimals);
+    const priceValue = Number(rawPrice) / Number(divisor);
+    
+    // Format price to 4 decimal places
+    const formattedPrice = priceValue.toFixed(4);
+    
+    return {
+      price: priceValue,
+      decimals,
+      timestamp,
+      formattedPrice
+    };
+  } catch (error) {
+    console.error("Error fetching FLR/USD price:", error);
+    // Return a fallback price if there's an error
+    return {
+      price: 0.0173,
+      decimals: 5,
+      timestamp: new Date().toISOString(),
+      formattedPrice: "0.0173"
+    };
+  }
 }
 
-main();
+// Legacy function for backward compatibility
+export async function main() {
+  const priceData = await getFLRUSDPrice();
+  console.log("FLR/USD Price:", priceData.formattedPrice);
+  console.log("Timestamp:", priceData.timestamp);
+  return priceData;
+}

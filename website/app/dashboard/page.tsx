@@ -4,6 +4,7 @@ import { FC, useState } from 'react';
 import { Plus, Clock } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import FLRPriceDisplay from '../components/FLRPriceDisplay';
 
 interface Subscription {
   id: string;
@@ -63,7 +64,10 @@ const Dashboard: FC = () => {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20">
       <div className="mt-12 mb-16">
         <div className="flex items-center justify-between">
-          <h1 className="text-3xl font-bold tracking-tight text-black">Dashboard</h1>
+          <div className="flex items-center gap-4">
+            <h1 className="text-3xl font-bold tracking-tight text-black">Dashboard</h1>
+            <FLRPriceDisplay className="ml-2" />
+          </div>
           <Link 
             href="/subscription/new"
             className="px-4 py-2 bg-indigo-600 text-white rounded-md hover:bg-indigo-700 transition-colors flex items-center gap-2 font-semibold"
